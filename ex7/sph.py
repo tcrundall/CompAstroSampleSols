@@ -1,12 +1,8 @@
-import copy
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-import slow_sph
-
-
-GAMMA = 1.4
+GAMMA = 5./3
 
 def neighbour_search(ii, data, search_radius):
     """
@@ -162,10 +158,8 @@ def calc_forces(data, h):
                 r_ij = data['pos'][ii] - data['pos'][jj]
                 v_ij = data['vel'][ii] - data['vel'][jj]
 
-                # Calculate unit vector in direction r_ij
-                r_hat = r_ij / np.linalg.norm(r_ij)
 
-
+                # Calculate pressure term
                 Press_term = (data['pres'][ii] / (data['dens'][ii]**2) \
                              + data['pres'][jj] / (data['dens'][jj]**2) )
 
