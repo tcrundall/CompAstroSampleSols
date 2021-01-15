@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-import slow_sph
-
 
 GAMMA = 1.4
 

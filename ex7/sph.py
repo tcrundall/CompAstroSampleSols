@@ -197,7 +197,7 @@ def print_energy(data, e_ref, ctime):
 
 def write_checkpoint(data, chk_cnt, output_dir, h):
     """
-    Wrtie a checkpoint file in a given directory.
+    Write a checkpoint file in a given directory.
     The output_dir will be created as needed.
     """
     filename = output_dir + '%04i.dat'%chk_cnt
