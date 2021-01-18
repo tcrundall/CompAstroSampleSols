@@ -67,21 +67,26 @@ if __name__ == '__main__':
 
     parts = {
         'pos':np.zeros(nparts),
-        'mass':np.ones(nparts) * mass_per_part,
+        # 'mass':np.ones(nparts) * mass_per_part,
+        'mass':np.full(nparts, mass_per_part),
         'vel':np.zeros(nparts),
         'dvdt':np.zeros(nparts),
+        'eint':np.zeros(nparts),
         'dudt':np.zeros(nparts),
+        'dens':np.zeros(nparts),
+        'pres':np.zeros(nparts),
         'neigh':{},
     }
 
     parts['pos'][:nparts_left] = np.linspace(x_left, x_front, nparts_left, endpoint=False)
     parts['pos'][nparts_left:] = np.linspace(x_front, x_right, nparts_right, endpoint=False)
 
-    parts['eint'] = np.zeros(nparts)
     parts['eint'][:nparts_left] = eint_left
     parts['eint'][nparts_left:] = eint_right
 
     init_parts = copy.deepcopy(parts)
 
 
+
     sph.run_simulation(parts, **run_pars)
+    # sph.run_simulation(parts, **run_pars)

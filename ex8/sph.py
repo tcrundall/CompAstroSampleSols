@@ -24,8 +24,13 @@ def calc_smoothing_length(data, eta):
     and its nearest neighbour, scaled by eta.
     """
     min_dists = []
-    for ix, part in enumerate(data['pos'][:-1]):
-        min_dists.append(np.min(np.abs(part-data['pos'][ix+1:])))
+    for ix, part in enumerate(data['pos']):
+        dists = np.abs(part-data['pos'])
+        # Avoid distance of particle to itself
+        dists = dists[dists > 1e-10]
+
+        min_dists.append(np.min(dists))
+        # min_dists.append(np.min(np.abs(part-data['pos'][ix+1:])))
     return eta * np.mean(min_dists)
 
 def kernel(r_ij, h):
@@ -312,15 +317,7 @@ def run_simulation(data, eta, CFL, tmax, plt_interv, output_dir, use_visc=False,
                 break
 
         # Calculate forces
-        data_copy = copy.deepcopy(data)
-        slow_sph.calc_forces_slow(data, h, use_visc, alpha)
-
-        calc_forces(data_copy, h, use_visc, alpha)
-
-        assert np.allclose(data_copy['dvdt'], data['dvdt'])
-        assert np.allclose(data_copy['dudt'], data['dudt'])
-
-        # import ipdb; ipdb.set_trace()
+        calc_forces(data, h, use_visc, alpha)
 
         print_energy(data, e_ref, ctime)
         print('Momentum: ', np.sum(data['vel']))
@@ -329,7 +326,6 @@ def run_simulation(data, eta, CFL, tmax, plt_interv, output_dir, use_visc=False,
             print('vel:  ', data['vel'])
             print('dvdt: ', data['dvdt'])
 
-            # import ipdb; ipdb.set_trace()
         # Step forward one time step
         evolve_particles(data, dt)
 
