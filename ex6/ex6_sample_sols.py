@@ -4,9 +4,6 @@ import sys
 
 from scipy import integrate
 
-# print('imported!')
-print('reimported!')
-
 def calc_smoothing_length_slow(particles, eta):
     """
     Calculate a global SPH smoothing length as defined in tut 6, eq. 10
@@ -109,7 +106,6 @@ def get_neighbours(parts, target_pos, search_radius):
     # search_radius *= (1+1e-10)
 
     neighbours = parts[np.where(dists <= search_radius)]
-    assert False
 
     return neighbours
     
@@ -198,22 +194,6 @@ def dens_estimator(pos, parts, masses, slength):
 
     # Sum up densitites
     return np.sum(all_dens)
-    
-
-# def generate_random_particles(nparticles, span, left_boundary=None, ndim=1):
-#     """
-#     Generate an array of particles with a uniform random distribution.
-#     """
-#     if left_boundary is None:
-#         left_boundary = np.zeros(3)
-#     assert len(left_bound) == ndim
-# 
-#     pos = np.random.rand(nparticles, ndim)      # generate values from 0 to 1
-#     pos *= pos_span             # Amplify span (0,.1) to desired range
-#     pos += left_bound           # Offset, taking left boundary from 0, to left_bound
-# 
-#     return pos
-
 
 def generate_row_of_particles(nparticles, xmin, xmax, ndim=1):
     """
@@ -307,19 +287,6 @@ def test_functions():
     plt.savefig('dens.png')
 
     assert np.isclose(nparticles, np.max(dens_vals))
-
-# if __name__ == '__main__':
-#     my_parts = generate_row_of_particles(11, 0, 10, ndim=1)
-#     search_rad = 2.
-# 
-#     third_part = my_parts[3]
-#     print(my_parts)
-#     print(third_part)
-# 
-#     neighbours = get_neighbours(my_parts, third_part, search_rad)
-#     print(neighbours)
-#     assert len(neighbours) == 5
-#     
     
     
 if __name__ == '__main__': 
@@ -364,7 +331,4 @@ if __name__ == '__main__':
     fig.savefig('densities.png')
 
     plt.close(fig)
-    print('end of main')
 
-print('chang')
-print('end of file')
