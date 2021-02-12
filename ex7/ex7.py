@@ -1,4 +1,10 @@
-import copy
+"""
+Run with:
+python ex7.py eta CFL
+
+where eta is an integer (between 1 and 10)
+and CFL is a float (between 0.01 and 1.0)
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -9,8 +15,12 @@ if __name__ == '__main__':
 
     nparts = 100
 
-    eta = int(sys.argv[1])
-    CFL = float(sys.argv[2])
+    try:
+        eta = int(sys.argv[1])
+        CFL = float(sys.argv[2])
+    except IndexError:
+        print("Usage: python ex7.py eta CFL")
+        sys.exit()
 
     run_pars = {
         'eta':eta,
